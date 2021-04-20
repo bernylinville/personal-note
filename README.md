@@ -20,3 +20,27 @@ acca6f416917e8e11490a08a1e2842d500b3a5d9f322c6319db0927b2901c3eae23cfb5cd5df6fac
 echo "deb http://download.proxmox.com/debian/pve buster pve-no-subscription" >/etc/apt/sources.list.d/pve-install-repo.list
 
 ```
+
+## lede(旁路由)
+
+```shell
+# 网卡 intel E1000
+# 导入镜像（pve 下）
+qemu-img convert -f raw  -O qcow2 openwrt-x86-64-generic-squashfs-combined-efi.img op.qcow2
+qemu-img check op.qcow2
+qm importdisk 100 op.qcow2 local-lvm
+
+# lede 下
+cp /etc/config/network /etc/config/network.bak
+
+vi /etc/config/network
+config interface 'eth0'
+	option ifname 'eth0'
+	option proto 'static'
+	option ipaddr '192.168.2.3'
+	option netmask '255.255.255.0'
+	option gateway '192.168.2.1'
+
+/etc/init.d/network restart
+
+```
