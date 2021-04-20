@@ -3,11 +3,13 @@
 ## pve
 
 ```shell
+# 备份
+cp /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js{,.bk}
 # 关闭You do not have a valid subscription for this server弹窗
 grep -P "!== 'Active'" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js &&
   sed -ri.bak  '/!== '"'Active'"'/{s#\([^)]+\)#(false)#}' /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 # 关闭企业源
-mv /etc/apt/sources.list.d/pve-enterprise.list{,.bak}
+mv /etc/apt/sources.list.d/pve-enterprise.list{,.bk}
 
 # 下载秘钥
 wget http://download.proxmox.com/debian/proxmox-ve-release-6.x.gpg -O /etc/apt/trusted.gpg.d/proxmox-ve-release-6.x.gpg
