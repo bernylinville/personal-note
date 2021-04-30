@@ -5,10 +5,10 @@
 int main()
 {
     char line[80];
-    FILE *in = fopen("spooky.csv", r);
-    FILE *file1 = fopen("ufos.csv", w);
-    FILE *file2 = fopen("disappearances", w);
-    FILE *file3 = fopen("others.csv", w);
+    FILE *in = fopen("spooky.csv", "r");
+    FILE *file1 = fopen("ufos.csv", "w");
+    FILE *file2 = fopen("disappearances", "w");
+    FILE *file3 = fopen("others.csv", "w");
     while (fscanf(in, "%79[^\n]\n", line) == 1) {
         if (strstr(line, "UFO"))
             fprintf(file1, "%s\n", line);
