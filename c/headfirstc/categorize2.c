@@ -1,4 +1,5 @@
 // ./categorize mermaid mermaid.csv Elvis elvises.csv the_rest.csv
+// ./categorize UFO aliens.csv Elvis elvises.csv the_rest.csv
 
 #include <stdio.h>
 #include <stdlib.h>
