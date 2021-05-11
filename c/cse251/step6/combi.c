@@ -30,10 +30,10 @@ int main ()
         exit(1);
     }
 
-    // b = Factorial(n) / (Factorial(k) * Factorial(n - k));
-    // printf("%d items taken %d ways is %d\n", n,k,b);
-    b = Binomial(n, k);
-    printf("%d items taken %d ways is %d\n", n, k, b);
+    b = Factorial(n) / (Factorial(k) * Factorial(n - k));
+    printf("%d items taken %d ways is %d\n", n,k,b);
+    // b = Binomial(n, k);
+    // printf("%d items taken %d ways is %d\n", n, k, b);
 }
 
 int Factorial(int n)
