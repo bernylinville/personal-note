@@ -6,21 +6,6 @@
 #include "autosolve.h"
 
 /*
- * Name :  <insert name here>
- *
- * Simple Towers of Hanoi game. You can solve it yourself or
- * ask the game to solve it for you.
- */
-
-void DisplayTower(int tower[NumPins][NumDisks]);
-
-int InputPin(char *msg, int fm, int to);
-bool CheckDone(int tower[NumPins][NumDisks]);
-void MoveDisk(int tower[NumPins][NumDisks], int fm, int to);
-void Reset(int tower[NumPins][NumDisks]);
-
-
-/*
  * The program main entry point
  */
 int main()
@@ -55,7 +40,27 @@ int main()
     return 0;
 }
 
+/*
+ * Reset the tower to its initial state
+ */
+void Reset(int tower[NumPins][NumDisks])
+{
+    int i, j;
 
+    for(j=0;  j<NumDisks;  j++)
+    {
+        tower[0][j] = 13 - j * 2;
+    }
+
+    for(i=1; i<NumPins;  i++)
+    {
+        for(j=0;  j<NumDisks;  j++)
+        {
+            tower[i][j] = 0;
+        }
+    }
+
+}
 
 /*
  * Move a disk from one pin to another
@@ -101,7 +106,6 @@ void MoveDisk(int tower[NumPins][NumDisks], int fm, int to)
     tower[to-1][t] = moving;
     tower[fm-1][f] = 0;
 }
-
 
 /*
  * Get a pin from the user

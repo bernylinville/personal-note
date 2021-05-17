@@ -17,7 +17,6 @@ void Autosolve(int tower[NumPins][NumDisks])
     DisplayTower(tower);
 }
 
-
 /*
  * Recursive solution for Towers of Hanoi. Moves num disks from
  * pin fm to pin to.
@@ -51,28 +50,4 @@ void AutoMove(int tower[NumPins][NumDisks], int num, int fm, int to)
     AutoMove(tower, num-1, fm, unused);
     AutoMove(tower, 1, fm, to);
     AutoMove(tower, num-1, unused, to);
-}
-
-
-
-/*
- * Reset the tower to its initial state
- */
-void Reset(int tower[NumPins][NumDisks])
-{
-    int i, j;
-
-    for(j=0;  j<NumDisks;  j++)
-    {
-        tower[0][j] = 13 - j * 2;
-    }
-
-    for(i=1; i<NumPins;  i++)
-    {
-        for(j=0;  j<NumDisks;  j++)
-        {
-            tower[i][j] = 0;
-        }
-    }
-
 }
