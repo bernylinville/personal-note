@@ -6,6 +6,7 @@
 void DisplayTransistor(struct Transistor tran)
 {
     printf("Number: %s\n", tran.number);
+
     switch(tran.type)
     {
     case NPN:
@@ -14,6 +15,29 @@ void DisplayTransistor(struct Transistor tran)
 
     case PNP:
         printf("Type: PNP\n");
+        break;
+    }
+
+    switch(tran.caseStyle)
+    {
+    case TO18:
+        printf("caseStyle: TO18\n");
+        break;
+
+    case TO92A:
+        printf("caseStyle: TO92A\n");
+        break;
+
+    case TO92C:
+        printf("caseStyle: TO92C\n");
+        break;
+
+    case TO220:
+        printf("caseStyle: TO220\n");
+        break;
+
+    case TO39:
+        printf("caseStyle: TO39\n");
         break;
     }
 
@@ -28,7 +52,7 @@ struct Transistor InputTransistor()
     printf("Please input transistor's number: ");
     InputString(t1.number, sizeof(t1.number));
     t1.type = InputTransistorType("Input type: ");
-    t1.caseStyle = TO39;
+    t1.caseStyle = InputTransistorStyle("Input caseStyle: ");
     t1.pmax = InputPositiveValue("Input pMax: ");
     t1.icmax = InputPositiveValue("Input icMax: ");
 
@@ -79,8 +103,6 @@ double InputPositiveValue(char *prompt)
 int InputTransistorType(char *prompt)
 {
     char buffer[100];
-    char strPNP[] = "PNP";
-    char strNPN[] = "npn";
     int transistorType;
 
     do {
@@ -93,10 +115,10 @@ int InputTransistorType(char *prompt)
         if(strlen(buffer) > 0)
             buffer[strlen(buffer)-1] = '\0';
 
-        if(strcmp(buffer, strPNP) == 0) {
+        if(strcmp(buffer, "PNP") == 0) {
             transistorType = PNP;
         }
-        if(strcmp(buffer, strNPN) == 0) {
+        if(strcmp(buffer, "NPN") == 0) {
             transistorType = NPN;
         }
 
@@ -104,4 +126,41 @@ int InputTransistorType(char *prompt)
     } while (transistorType != NPN && transistorType != PNP);
 
     return transistorType;
+}
+
+int InputTransistorStyle(char *prompt)
+{
+    char buffer[100];
+    int transistorStyle;
+
+    do {
+        printf("%s", prompt);
+
+        /* Get a line of up to 100 characters */
+        fgets(buffer, sizeof(buffer), stdin);
+
+        /* Remove any \n we may have input */
+        if(strlen(buffer) > 0)
+            buffer[strlen(buffer)-1] = '\0';
+
+        if(strcmp(buffer, "TO18") == 0) {
+            transistorStyle = TO18;
+        }
+        if(strcmp(buffer, "TO92A") == 0) {
+            transistorStyle = TO92A;
+        }
+        if(strcmp(buffer, "TO92C") == 0) {
+            transistorStyle = TO92C;
+        }
+        if(strcmp(buffer, "TO220") == 0) {
+            transistorStyle = TO220;
+        }
+        if(strcmp(buffer, "TO39") == 0) {
+            transistorStyle = TO39;
+        }
+
+        // sscanf(buffer, "%d", &transistorType);
+    } while (transistorStyle < 1 && transistorStyle > 5);
+
+    return transistorStyle;
 }
