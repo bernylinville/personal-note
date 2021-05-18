@@ -3,7 +3,7 @@
 
 #include "transistors.h"
 
-void DisplayTransistor(struct Transistor tran)
+void DisplayTransistor(Tran tran)
 {
     printf("Number: %s\n", tran.number);
 
@@ -45,9 +45,9 @@ void DisplayTransistor(struct Transistor tran)
     printf("icMax: %.3f\n", tran.icmax);
 }
 
-struct Transistor InputTransistor()
+Tran InputTransistor()
 {
-    struct Transistor t1;
+    Tran t1;
 
     printf("Please input transistor's number: ");
     InputString(t1.number, sizeof(t1.number));

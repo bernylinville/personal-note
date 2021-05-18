@@ -12,7 +12,7 @@
 
 int main()
 {
-    struct Transistor t1;
+    Tran t1;
 
     printf("transistors!\n");
 
