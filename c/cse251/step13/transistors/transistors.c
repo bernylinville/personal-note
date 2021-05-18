@@ -12,12 +12,19 @@
 
 int main()
 {
-    Tran t1;
+    int i;
+    Tran trans[3];
 
     printf("transistors!\n");
 
-    t1 = InputTransistor();
+    for(i=0;  i<3;  i++)
+    {
+        trans[i] = InputTransistor();
+    }
 
-    DisplayTransistor(t1);
-
+    for (i = 0; i < 3; i++)
+    {
+        printf("\nThe transistors:\n");
+        DisplayTransistor(trans[i]);
+    }
 }
