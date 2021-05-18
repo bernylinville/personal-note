@@ -27,7 +27,7 @@ struct Transistor InputTransistor()
 
     printf("Please input transistor's number: ");
     InputString(t1.number, sizeof(t1.number));
-    t1.type = NPN;
+    t1.type = InputTransistorType("Input type: ");
     t1.caseStyle = TO39;
     t1.pmax = InputPositiveValue("Input pMax: ");
     t1.icmax = InputPositiveValue("Input icMax: ");
@@ -74,4 +74,34 @@ double InputPositiveValue(char *prompt)
     } while (value <= 0);
 
     return value;
+}
+
+int InputTransistorType(char *prompt)
+{
+    char buffer[100];
+    char strPNP[] = "PNP";
+    char strNPN[] = "npn";
+    int transistorType;
+
+    do {
+        printf("%s", prompt);
+
+        /* Get a line of up to 100 characters */
+        fgets(buffer, sizeof(buffer), stdin);
+
+        /* Remove any \n we may have input */
+        if(strlen(buffer) > 0)
+            buffer[strlen(buffer)-1] = '\0';
+
+        if(strcmp(buffer, strPNP) == 0) {
+            transistorType = PNP;
+        }
+        if(strcmp(buffer, strNPN) == 0) {
+            transistorType = NPN;
+        }
+
+        // sscanf(buffer, "%d", &transistorType);
+    } while (transistorType != NPN && transistorType != PNP);
+
+    return transistorType;
 }
