@@ -21,5 +21,8 @@ struct Transistor {
 };
 
 void DisplayTransistor(struct Transistor tran);
+struct Transistor InputTransistor();
+void InputString(char *str, int max);
+double InputPositiveValue(char *prompt);
 
 #endif
