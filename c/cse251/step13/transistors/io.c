@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "transistors.h"
 
@@ -163,4 +164,31 @@ int InputTransistorStyle(char *prompt)
     } while (transistorStyle < 1 && transistorStyle > 5);
 
     return transistorStyle;
+}
+
+void AnotherTransistor(char *str, int max)
+{
+    int i;
+    char buffer[100];
+
+    /* Get a line of up to 100 characters */
+    fgets(buffer, sizeof(buffer), stdin);
+
+    /* Remove any stray newlines from the buffer */
+    while (buffer[0] == '\n')
+        fgets(buffer, sizeof(buffer), stdin);
+
+    /* Remove any \n we may have input */
+    if(strlen(buffer) > 0)
+        buffer[strlen(buffer)-1] = '\0';
+
+    /* Copy up to max characters to our string */
+    // strncpy(str, tolower(buffer), max);
+    strncpy(str, buffer, max);
+
+    for(i = 0; i < max; i++)
+        str[i] = tolower(str[i]);
+
+    str[max-1] = '\0';
+
 }

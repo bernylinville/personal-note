@@ -27,5 +27,6 @@ void InputString(char *str, int max);
 double InputPositiveValue(char *prompt);
 int InputTransistorType(char *prompt);
 int InputTransistorStyle(char *prompt);
+void AnotherTransistor(char *str, int max);
 
 #endif
