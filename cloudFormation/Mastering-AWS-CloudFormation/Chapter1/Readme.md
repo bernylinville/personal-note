@@ -27,3 +27,22 @@ clean test
 ```bash
 for i in mybucket iamrole cfniamrole; do aws cloudformation delete-stack --stack-name $i ; done
 ```
+
+questions:
+1. Which API method is invoked when we create a CloudFormation stack?
+cloudformation:CreateStack
+
+2. What is a CloudFormation service role?
+CloudFormation supports service roles. Service roles are the IAM roles that are used by different AWS services (such as EC2, ECS, Lambda, and so on). CloudFormation service roles are used by CloudFormation during stacks and StackSets operations—creation, update, and deletion.
+
+3. Which IAM policies are used if we do not specify the CloudFormation service role?
+AdminPolicy
+
+4. How is the information about stack resources stored in CloudFormation?
+5. What happens if we delete the resource created by CloudFormation and try to create the same stack?
+It will create again.
+
+6. What happens if we delete the resource created by CloudFormation and try to update the same stack?
+Stack [stack-name] does not exist.
+
+7. Why can't CloudFormation recreate the deleted resource?
