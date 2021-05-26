@@ -51,7 +51,13 @@ def largest_factor(n):
     >>> largest_factor(13) # factor is 1 since 13 is prime
     1
     """
-    "*** YOUR CODE HERE ***"
+    l = []
+    i = 1
+    while(i < n):
+        if n % i == 0:
+            l.append(i)
+        i += 1
+    return max(l)
 
 
 def if_function(condition, true_result, false_result):
@@ -95,18 +101,20 @@ def with_if_function():
     None
     """
     return if_function(cond(), true_func(), false_func())
+    # 这道题的关键在于，我不满足条件了，函数是否还会被执行？
+    # 可以看到，with_if_function中使用的是call expression，即便cond返回为False，第二个函数·true_func()·还是会被执行
 
 
 def cond():
-    "*** YOUR CODE HERE ***"
+    return False
 
 
 def true_func():
-    "*** YOUR CODE HERE ***"
+    print("Welcome to")
 
 
 def false_func():
-    "*** YOUR CODE HERE ***"
+    print("61A")
 
 
 def hailstone(n):
@@ -124,4 +132,13 @@ def hailstone(n):
     >>> a
     7
     """
-    "*** YOUR CODE HERE ***"
+    i = 1
+    while(n != 1):
+        print(n)
+        if n % 2 == 0:
+            n = n//2
+        else:
+            n = 3*n+1
+        i += 1
+    print(n)
+    return i
