@@ -1,0 +1,68 @@
+version: '2'
+services:
+  fix-jenkins-permissions:
+    image: docker.io/bitnami/jenkins:2
+    user: root
+    command: chown -R 1001:1001 /bitnami
+    volumes:
+      - /opt/jenkins:/bitnami/jenkins
+  jenkins:
+    image: docker.io/bitnami/jenkins:2
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+      - '50000:50000'
+    volumes:
+      - /opt/jenkins:/bitnami/jenkins
+    environment:
+      - JENKINS_USERNAME=admin
+    depends_on:
+      - fix-jenkins-permissions
+ubuntu@jenkins:/opt$ cat jenkins/docker-compose.yml
+
+      - /opt/jenkins/jenkins:/bitnami/jenkins
+  jenkins:
+    image: docker.io/bitnami/jenkins:2
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+      - '50000:50000'
+    volumes:
+      - /opt/jenkins/jenkins:/bitnami/jenkins
+    environment:
+      - VIRTUAL_HOST=example.com
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_HOST=example.com
+      - LETSENCRYPT_EMAIL=
+    depends_on:
+      - fix-jenkins-permissions
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    volumes:
+      - certs:/etc/nginx/certs
+      - vhost.d:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
+    volumes:
+      - certs:/etc/nginx/certs
+      - vhost.d:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DEFAULT_EMAIL=
+    depends_on:
+      - nginx-proxy
+
+volumes:
+  certs:
+  vhost.d:
+  html:
+  acme:
