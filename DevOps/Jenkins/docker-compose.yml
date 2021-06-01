@@ -1,41 +1,37 @@
 version: '2'
 services:
-  fix-jenkins-permissions:
-    image: docker.io/bitnami/jenkins:2
-    user: root
-    command: chown -R 1001:1001 /bitnami
+  docker:
+    image: docker:dind
+    privileged: true
+    ports:
+      - '3000:3000'
+      - '2376:2376'
     volumes:
-      - /opt/jenkins:/bitnami/jenkins
+      - jenkins_home:/var/jenkins_home
+      - certs:/certs/client
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    networks:
+      - docker
   jenkins:
-    image: docker.io/bitnami/jenkins:2
+    build: ./jenkins_dockerfile
     ports:
       - '8080:8080'
-      - '8443:8443'
       - '50000:50000'
     volumes:
-      - /opt/jenkins:/bitnami/jenkins
+      - jenkins_home:/var/jenkins_home
+      - certs:/certs/client
+      - $HOME:/home
     environment:
-      - JENKINS_USERNAME=admin
-    depends_on:
-      - fix-jenkins-permissions
-ubuntu@jenkins:/opt$ cat jenkins/docker-compose.yml
-
-      - /opt/jenkins/jenkins:/bitnami/jenkins
-  jenkins:
-    image: docker.io/bitnami/jenkins:2
-    ports:
-      - '8080:8080'
-      - '8443:8443'
-      - '50000:50000'
-    volumes:
-      - /opt/jenkins/jenkins:/bitnami/jenkins
-    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
       - VIRTUAL_HOST=example.com
       - VIRTUAL_PORT=8080
       - LETSENCRYPT_HOST=example.com
       - LETSENCRYPT_EMAIL=
-    depends_on:
-      - fix-jenkins-permissions
+    networks:
+      - docker
   nginx-proxy:
     image: nginxproxy/nginx-proxy
     ports:
@@ -48,6 +44,8 @@ ubuntu@jenkins:/opt$ cat jenkins/docker-compose.yml
       - vhost.d:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - docker
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
     volumes:
@@ -60,9 +58,15 @@ ubuntu@jenkins:/opt$ cat jenkins/docker-compose.yml
       - DEFAULT_EMAIL=
     depends_on:
       - nginx-proxy
+    networks:
+      - docker
 
 volumes:
+  jenkins_home:
   certs:
   vhost.d:
   html:
   acme:
+
+networks:
+  docker:
