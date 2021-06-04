@@ -8,7 +8,7 @@ mkdir -p \
 
 if [ -e /etc/mysql/mariadb.conf.d/50-server.cnf ]; then \
 	CONF_FILE="/etc/mysql/mariadb.conf.d/50-server.cnf";
- else CONF_FILE="/etc/mysql/my.cnf"; 
+ else CONF_FILE="/etc/mysql/my.cnf";
 fi
 
 # configure my.cnf and mysqld_safe
