@@ -1,4 +1,4 @@
-FROM python:3.6.13-slim-buster
+FROM python:3.6-buster
 
 
 RUN apt-get update && apt-get install -y curl unzip && rm -rf /var/lib/apt/lists/*
